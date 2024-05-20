@@ -1,16 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Appbar from './components/Appbar'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-     <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+        <Appbar/>
+                    {/* <Router>
+                        <Appbar />
+                        <InitUser />
+                        <Routes>
+                            <Route path={"/addcourse"} element={<AddCourse />} />
+                            <Route path={"/course/:courseId"} element={<Course />} />
+                            <Route path={"/courses"} element={<Courses />} />
+                            <Route path={"/signin"} element={<Signin />} />
+                            <Route path={"/signup"} element={<Signup />} />
+                            <Route path={"/"} element={<Landing />} />
+                        </Routes>
+                    </Router> */}
     </>
   )
 }
