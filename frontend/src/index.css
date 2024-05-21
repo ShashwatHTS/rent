@@ -1,3 +1,14 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.p {
+  display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 5ch;
+    margin-bottom: 1rem;
+}

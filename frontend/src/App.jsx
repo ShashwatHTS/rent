@@ -1,26 +1,34 @@
-import './App.css'
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Appbar from './components/Appbar'
+import "./App.css";
+import {
+  createBrowserRouter,
+  Route,
+  RouterProvider,
+  Routes,
+} from "react-router-dom";
+import Home from "./pages/Home";
+import Properties from "./pages/Properties";
+import Appbar from "./components/Appbar";
+import PropertyAddForm from "./components/PropertyAddForm";
+import PropertyPage from "./pages/PropertyPage";
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
 
 function App() {
-
   return (
     <>
-        <Appbar/>
-                    {/* <Router>
-                        <Appbar />
-                        <InitUser />
-                        <Routes>
-                            <Route path={"/addcourse"} element={<AddCourse />} />
-                            <Route path={"/course/:courseId"} element={<Course />} />
-                            <Route path={"/courses"} element={<Courses />} />
-                            <Route path={"/signin"} element={<Signin />} />
-                            <Route path={"/signup"} element={<Signup />} />
-                            <Route path={"/"} element={<Landing />} />
-                        </Routes>
-                    </Router> */}
+      <Appbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/properties" element={<Properties />} />
+        <Route path="/addproperty" element={<PropertyAddForm />} />
+        <Route path="/property/:id" element={<PropertyPage />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+
+      </Routes>
+      {/* <RouterProvider router={router} /> */}
     </>
-  )
+  );
 }
 
-export default App
+export default App;

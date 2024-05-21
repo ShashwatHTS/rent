@@ -39,7 +39,7 @@ exports.createProperty = async (req, res) => {
       images,
     } = req.body;
 
-    const owner =  req.user; // Assuming userId is available in req.user after authentication
+    const owner = "664b0e15bf45800822c53399" // req.user; // Assuming userId is available in req.user after authentication
 
     const propertyData = {
       type,

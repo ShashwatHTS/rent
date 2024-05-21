@@ -13,11 +13,11 @@ const { authenticateToken } = require("../middleware/auth.middleware");
 
 /* GET users listing. */
 
-router.post("/create", authenticateToken, createProperty);
+router.post("/create", createProperty);
 router.get("/", getProperties);
 router.get("/:id", getPropertiesById);
-router.put("/update/:id", authenticateToken, updateProperty);
-router.delete("/delete/:id", authenticateToken, deleteProperty);
+router.put("/update/:id",  updateProperty);
+router.delete("/delete/:id",  deleteProperty);
 // router.get('/check',authenticateToken, function (req, res, next) {
 // res.send("checked")
 // })

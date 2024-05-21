@@ -1,0 +1,26 @@
+.sidebar_item{
+    transition: 0.3s;
+    cursor: pointer;
+    border-radius: 8px;
+}
+.sidebar_item:hover{
+    background-color: #EEF2FF !important;
+}
+html, body {
+    font-size: 14px;
+  }
+@media (max-width: 1500px) {
+    html, body {
+      font-size: 12px;
+    }
+  }
+  @media (max-width: 1300px) {
+    html, body {
+      font-size: 10px;
+    }
+  }
+  @media (max-width: 1200px) {
+    html, body {
+      font-size: 9px;
+    }
+  }
