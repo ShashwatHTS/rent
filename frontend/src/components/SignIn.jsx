@@ -12,7 +12,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Phone } from '@mui/icons-material';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -32,19 +33,25 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const navigate=useNavigate()
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
-        password: data.get('password'),
-      PhoneNumber:data.get('phoneNumber'),
+      password: data.get('password'),
     });
+    axios.post("http://localhost:3000/users/login", {
+      email: data.get('email'),
+      password: data.get('password'),
+    }).then(res => {
+      console.log(res.data)
+navigate('/properties')
+    }).catch(err => console.log(err))
   };
 
   return (
-      <ThemeProvider theme={defaultTheme}>
-          
+    <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -81,8 +88,7 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
-                      />
-                       
+            />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"

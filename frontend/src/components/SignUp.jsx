@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -31,16 +33,25 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+  const navigate = useNavigate()
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
-        password: data.get('password'),
-        phoneNumber: data.get('phoneNumber'),
-        firstName: data.get('firstName'),
-        lastName: data.get('lastName'),
+      password: data.get('password'),
     });
+    axios.post("http://localhost:3000/users/create", {
+      email: data.get('email'),
+      password: data.get('password'),
+      firstName: data.get('firstName'),
+      lastName: data.get('lastName'),
+      phoneNumber: data.get('phoneNumber'),
+       
+    }).then(res => {
+      console.log(res.data)
+      navigate('/signin')
+    }).catch(err => console.log(err))
   };
 
   return (
@@ -83,19 +94,17 @@ export default function SignUp() {
                   name="lastName"
                   autoComplete="family-name"
                 />
-                          </Grid>
-                          <Grid item xs={12}>
-                              <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="phoneNumber"
-              label="Mobile Number"
-              name="phoneNumber"
-              autoComplete="phoneNumber"
-              autoFocus
-            />
-                          </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="phoneNumber"
+                  label="Phone Number"
+                  name="phoneNumber"
+                  autoComplete="family-name"
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required

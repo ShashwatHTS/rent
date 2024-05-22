@@ -10,12 +10,11 @@ const cookieOptions = { httpOnly: true, secure: true, sameSite: "none" };
 exports.createUser = async (req, res) => {
     try {
         const postBody = req.body
-        if (postBody.email) {
-            const user = await User.findOne({ email: postBody.email })
-            res.json({ success: true, message: 'User already exists.', statusbar: 200, user })
+        const user = await User.findOne({ email: postBody.email })
+        if (user) {
+            res.json({ success: false, message: 'User already exists.', statusbar: 400 })
         }
-        const newUser = new User(postBody)
-        await newUser.save();
+        const newUser = await User.create(postBody)
         res.json({ success: true, message: 'User created successfully.', statusbar: 200, newUser })
     } catch (error) {
         console.log("error", error)
