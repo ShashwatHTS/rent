@@ -37,7 +37,7 @@ const authenticateToken =  (req, res, next) => {
                     return res.status(400).send({ success: false, message: err?.message ? err.message : 'Invalid Token.' });
                 }
             } else {
-                // console.log("authData", authData.id)
+                // console.log("authData", authData)
                 res.locals.tokenData = authData;
                 req.user = authData.id;
                 // console.log(req.user, "req.user.id")
