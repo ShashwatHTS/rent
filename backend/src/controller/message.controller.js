@@ -25,7 +25,7 @@ exports.getMessage = async (req, res) => {
     const messages = [...unreadMessages, ...readMessages];
     res.json({ success: true, messages });
   } catch (error) {
-    console.log("error", error);
+    console.error("error", error);
   }
 };
 
@@ -52,7 +52,7 @@ exports.createMessage = async (req, res) => {
     await newMessage.save();
     res.json({ success: true, message: "Message sent successfully." });
   } catch (error) {
-    console.log("error", error);
+    console.error("error", error);
   }
 };
 
@@ -67,7 +67,7 @@ exports.messageById = async (req, res) => {
     }
     res.json({ success: true, message });
   } catch (error) {
-    console.log("error", error);
+    console.error("error", error);
   }
 };
 
@@ -89,6 +89,6 @@ exports.deleteMessageById = async (req, res) => {
     await message.deleteOne();
     res.json({ success: true, message: "Message deleted successfully." });
   } catch (error) {
-    console.log("error", error);
+    console.error("error", error);
   }
 };

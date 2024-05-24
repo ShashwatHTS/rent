@@ -7,7 +7,7 @@ const { authenticateToken } = require('../middleware/auth.middleware');
 router.get('/', function (req, res, next) {
   res.send('respond with a resource');
 });
-router.post('/create', createUser);
+router.post('/register', createUser);
 router.post('/login', logIn)
 router.get('/logout', authenticateToken, logOut)
 router.get('/me',authenticateToken,  getMe)

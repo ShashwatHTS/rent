@@ -1,10 +1,11 @@
 import React from "react";
 // import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
+import { useAuthState } from "../atoms";
 const ProtectedRoutes = (props) => {
-    // const { isAuthenticated } = useSelector((state) => state.auth);
+    const [authState, setAuthState] = useAuthState();
     const isAuthenticated = false
-    return !isAuthenticated ? (
+    return authState.loggedIn ? (
         <Outlet />
     ) : (
         <Navigate to={props.to || "/signin"} />

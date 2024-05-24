@@ -13,19 +13,23 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
-import { Link } from "@mui/material";
+import { Link } from "react-router-dom";
+import { useAuthState } from "../atoms";
 
 const pages = [
   { name: "properties", link: "/properties" },
   { name: "Add-Property", link: "/addproperty" },
 ];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+// const setings = ["Profile", "Account", "Dashboard", "Logout"];
+
 
 function Appbar() {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [authState, setAuthState] = useAuthState();
 
+  // console.log("authState", authState.loggedIn)
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -35,12 +39,46 @@ function Appbar() {
 
   const handleCloseNavMenu = (page) => {
     setAnchorElNav(null);
-    navigation(page.toLowerCase());
+    navigate(page.toLowerCase());
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (page, onClick) => {
     setAnchorElUser(null);
+    page && navigate(page.toLowerCase())
+    onClick?.()
   };
+
+  const settings = [
+    {
+      name: "Profile",
+      link: "/profile",
+    },
+    {
+      name: "Account",
+      link: "/account",
+    },
+    {
+      name: "Dashboard",
+      link: "/properties",
+    },
+    {
+      name: "Logout",
+      onClick: async () => {
+        const response = await fetch("http://localhost:3000/users/logout", {
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token").slice(1, -1)
+          }
+        })
+
+        // console.log("second", response)
+        if (response.status === 200) {
+          localStorage.removeItem("token")
+          setAuthState({ loggedIn: false, token: "" })
+          navigate("/")
+        }
+      }
+    },
+  ]
 
   return (
     <AppBar position="static">
@@ -132,35 +170,41 @@ function Appbar() {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          {authState.loggedIn ? (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting.link, setting.onClick)}>
+                    <Typography textAlign="center">{setting.name}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          ) : (
+            <div>
+              <Link to="/signin"><Button variant="contained">Login</Button></Link>
+            </div>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

@@ -4,7 +4,7 @@ const cookieOptions = { httpOnly: true, secure: true, sameSite: "none" };
 require('dotenv').config()
 const secretKey = "Rentify";
 
-console.log(secretKey,"----------")
+// console.log(secretKey,"----------")
 
 
 
@@ -26,9 +26,15 @@ const verifyToken = (accessToken) => {
 
 const authenticateToken =  (req, res, next) => {
     try {
-        const token = req.cookies.accessToken;
-        // console.log(token,"----")
+        // const token = req.cookies.accessToken;
+        const authHeader = req.headers.authorization;
+        const token = authHeader.split(' ')[1];
+        // console.log("tokem-------->", token,)
+        // console.log("toeknAuth----->", token,)
+
+        // console.log("check")
         if (!token) return res.status(401).json({ success: false, message: 'Access Denied. No token provided.' })
+        
         jwt.verify(token, secretKey, (err, authData) => {
             if (err) {
                 if (err.name === "TokenExpiredError") {
@@ -40,7 +46,7 @@ const authenticateToken =  (req, res, next) => {
                 // console.log("authData", authData)
                 res.locals.tokenData = authData;
                 req.user = authData.id;
-                // console.log(req.user, "req.user.id")
+                console.log(req.user, "req.user.id")
                 next();
             }
         });

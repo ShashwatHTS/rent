@@ -33,10 +33,13 @@ exports.logIn = async (req, res) => {
         }
         if (user && user.password === postBody.password) {
             const token = jwt.sign({ id: user._id }, secretKey, { expiresIn: '1h' });
-            res.cookie("accessToken", token, cookieOptions);
             //set hearder.authorization
             req.headers.authorization = `Bearer ${token}`
-            res.json({ success: true, message: 'User logged in successfully.', statusbar: 200, user, token })
+            res.cookie("accessToken", token, cookieOptions);
+
+            // console.log("token------>", token)
+            // console.log("header------>", req.headers.authorization)
+            res.json({ success: true, message: 'User logged in successfully.', statusbar: 200, user, token,})
         }
     } catch (error) {
         console.log("error", error)
@@ -54,7 +57,7 @@ exports.logOut = async (req, res) => {
 
 exports.getMe = async (req, res) => {
     try {
-        console.log("hello")
+        // console.log("hello")
         res.json({ success: true, data: req.user, message: 'this is me', statusbar: 200 })
     } catch (error) {
         console.log("error", error)

@@ -62,7 +62,13 @@ const PropertyAddForm = ({ updateForm = false }) => {
   const handleSubmit = (event) => {
     // event.preventDefault();
     setLoading(true)
-    axios.post(`http://localhost:3000/api/properties/${updateForm ? 'update/' + id : 'create'}`, fields).then(res => {
+    axios.post(`http://localhost:3000/api/properties/${updateForm ? 'update/' + id : 'create'}`, fields,
+      {
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem("token").slice(1, -1)
+        }
+      }
+    ).then(res => {
       setLoading(false)
       console.log(res.data)
       alert("Property added successfully")

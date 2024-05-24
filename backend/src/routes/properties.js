@@ -13,7 +13,7 @@ const { authenticateToken } = require("../middleware/auth.middleware");
 
 /* GET users listing. */
 
-router.post("/create", createProperty);
+router.post("/create",authenticateToken, createProperty);
 router.get("/",authenticateToken, getProperties);
 router.get("/:id", getPropertiesById);
 router.put("/update/:id",  updateProperty);

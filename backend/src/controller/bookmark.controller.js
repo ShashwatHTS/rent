@@ -7,7 +7,7 @@ exports.getBookmarks = async (req, res) => {
     const bookmarks = await Property.find({ _id: { $in: user.bookmarks } });
     res.json({ success: true, bookmarks });
   } catch (error) {
-    console.log("error", error);
+    console.error("error", error);
   }
 };
 
@@ -49,6 +49,6 @@ exports.createBookmark = async (req, res) => {
     await user.save();
     res.json({ success: true, message: isBookmarked });
   } catch (error) {
-    console.log("error", error);
+    console.error("error", error);
   }
 };

@@ -39,7 +39,7 @@ exports.createProperty = async (req, res) => {
       images,
     } = req.body;
 
-    const owner = "664b0e15bf45800822c53399" // req.user; // Assuming userId is available in req.user after authentication
+    const owner =  req.user; // Assuming userId is available in req.user after authentication
 
     const propertyData = {
       type,
@@ -58,7 +58,7 @@ exports.createProperty = async (req, res) => {
     // If handling image uploads, you can include image upload logic here
 
 
-    console.log(propertyData)
+    // console.log(propertyData)
     const newProperty = new Property(propertyData);
     await newProperty.save();
     res.status(201).json({ success: true, message: 'Property created successfully.', property: newProperty });

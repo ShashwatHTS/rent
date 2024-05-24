@@ -10,12 +10,14 @@ import {
 } from "react-router-dom";
 import Properties from "./pages/Properties.jsx";
 import Home from "./pages/Home.jsx";
-
+import { RecoilRoot } from "recoil";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <RecoilRoot>
+        <App />
+      </RecoilRoot>
     </BrowserRouter>
   </React.StrictMode>
 );
